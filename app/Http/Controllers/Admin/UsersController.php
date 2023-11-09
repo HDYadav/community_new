@@ -39,11 +39,7 @@ class UsersController extends Controller
                 ->addColumn('action', function ($row) {
                     $edit_icon=asset("admin/assets/images/icon/edit-8-64.png"); 
                     $del_icon=asset("admin/assets/images/icon/delete-icon.png");
-<<<<<<< HEAD
-                    $btn = "<a class='edit btn btn-sm' href='users/$row->id/edit'><img src=$edit_icon></a>   <a alt='Delete' onclick='deletess($row->id)'><img src=$del_icon height='50%' width='50%'></a></a>";
-=======
                     $btn = "<a class='edit btn btn-sm' href='users/$row->id/edit'><img src=$edit_icon height='25%' width='25%'></a>   <a alt='Delete' onclick='deletess($row->id)'><img src=$del_icon height='25%' width='25%'  ></a>";
->>>>>>> 4413c73 (removed old logs)
                     return $btn;
                 })
                 ->rawColumns(['action'])
@@ -68,13 +64,9 @@ class UsersController extends Controller
         $subcongregations = $userRepository->sub_congregation(self::$subCongregation);
         $subcongregationcaretakers = $userRepository->sub_congregation(self::$subCongregationCaretaker);
 
-<<<<<<< HEAD
-        return view('admin.users.create', compact('roles','parents','subcongregations','subcongregationcaretakers'));
-=======
         $locations = $userRepository->getLocations();
 
         return view('admin.users.create', compact('roles','parents','subcongregations','subcongregationcaretakers', 'locations'));
->>>>>>> 4413c73 (removed old logs)
     }
 
     /**
@@ -113,10 +105,7 @@ class UsersController extends Controller
         //$userRepository->userWithoutSA();
         $roles = $userRepository->getRoles();
         $parents = $userRepository->getAllCategoriesWithChildren(User::all(), Self::$superAdmin);  // Get all paret and child 
-<<<<<<< HEAD
-=======
         $locations = $userRepository->getLocations();
->>>>>>> 4413c73 (removed old logs)
      
       
         return view('admin.users.edit', [
@@ -126,10 +115,7 @@ class UsersController extends Controller
             'parents' =>  $parents,
             'role_id' => $user->roles->first()->id,
             'parent_id' => $user->parent_id,
-<<<<<<< HEAD
-=======
             'locations' => $locations,
->>>>>>> 4413c73 (removed old logs)
         ]);
     }
 
