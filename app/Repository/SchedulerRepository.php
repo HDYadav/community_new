@@ -6,9 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\UserData;
-use App\Models\Scheduler;
-
-
+use App\Models\Scheduler; 
 
 class SchedulerRepository
 {
@@ -63,12 +61,11 @@ class SchedulerRepository
     public function getSchedulesDraft()
     {
         $scheduler = DB::table('schedulers as s')
-        ->join('days as d', 'd.id', '=', 's.days_id')
-        ->join('cities as c', 'c.id', '=', 's.city_id')
-        ->join('users as u', 'u.id', '=', 's.user_id')
-        ->where('s.status', Scheduler::STATUS_DRAFT)
-            ->orderBy('d.date', 'ASC')
-            ->select('d.id', 's.id as sid', DB::raw('DATE_FORMAT(d.date, "%d-%b-%Y") as date'), 'd.day', 'c.name as city_name', 'u.name', 's.city_id');
+                    ->join('days as d', 'd.id', '=', 's.days_id')
+                    ->join('cities as c', 'c.id', '=', 's.city_id')
+                    ->join('users as u', 'u.id', '=', 's.user_id')
+                    ->where('s.status', Scheduler::STATUS_DRAFT)
+                    ->select('d.id', 's.id as sid', DB::raw('DATE_FORMAT(d.date, "%d-%b-%Y") as date'), 'd.day', 'c.name as city_name', 'u.name', 's.city_id');
 
         return $scheduler->get();
     }
