@@ -131,6 +131,8 @@ class SchedulerController extends Controller
         if ($request->ajax()) {
 
             $scheduler = $schedulerRepository->getSchedulesDraft($request);
+
+          //  dd($scheduler);
             return Datatables::of($scheduler)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {

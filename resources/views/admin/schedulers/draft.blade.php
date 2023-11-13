@@ -127,7 +127,7 @@
         var table = $('.data-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('schedulers.list') }}",
+            ajax: "{{ route('schedulers.draft') }}",
             columns: [{
                     data: 'name',
                     name: 'name'
