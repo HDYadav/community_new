@@ -33,8 +33,16 @@ function getUsers()
                 ->where('r.name', 'message giver')
                 ->select('u.id', 'u.name') 
                 ->get(); 
-                return  $users;
-                 
+                return  $users;                 
         }
 
+function getUserID($day_id, $city_id)
+{
+        $users = DB::table('schedulers as s')               
+                ->where('s.days_id', $day_id)
+                ->where('s.city_id', $city_id,)
+                ->select('s.user_id')
+                ->first();
+        return  $users;
+}
 

@@ -29,7 +29,7 @@
               <tbody>
 
                   <tr class="table-info">
-                      <th colspan="2" align="center"><strong> Sunday <?php echo $day->date; ?> </strong> <span id="show<?php echo $x; ?>" style="cursor:pointer">Show/Hide</span> </th>
+                      <th colspan="2" align="center"><strong> Week {{$x}}, Sunday <?php echo $day->date; ?> </strong> <span id="show<?php echo $x; ?>" style="cursor:pointer">Show/Hide</span> </th>
                       </th>
 
                   <tr id="tbd<?php echo $x ?>" <?php if ($x > 1) { ?> style="display:none" <?php } ?>>
@@ -58,13 +58,13 @@
                                       </td>
 
                                       <td>
-                                          <select name="member[]" id="member" class="form-control form-control-sm">
+                                          <select name="member[]" id="member" class="btn btn-sm btn-outline-primary dropdown-toggle">
 
-                                              <option value="">Select speaker</option>
+                                              <option value="" class="dropdown-item">Select speaker</option>
                                               <?php
                                                 foreach ($members as $member) {
                                                 ?>
-                                                  <option value="<?php echo $member->id ?>"><?php echo $member->name ?></option>
+                                                  <option value="<?php echo $member->id ?>" class="dropdown-item"><?php echo $member->name ?></option>
                                               <?php } ?>
 
                                           </select>
@@ -84,8 +84,11 @@
 
       <?php $x++;
         } ?>
-
-      <button type="submit" class="btn btn-primary">Save</button>
+      <br>
+      <br>
+ 
+      <button type="submit" name="save" value="save" class="btn btn-primary">Save Publish</button>
+      <button type="submit" name="draft" value="draft" class="btn btn-primary">Save Draft</button>
 
 
   </form>
@@ -145,7 +148,7 @@
                   <h4 class="modal-title" id="exampleModalLabel">Modal</h4>
               </div>
               <div class="modal-body">
-                   
+
               </div>
               <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal" onclick="hideModal()">Close</button>

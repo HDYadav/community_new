@@ -12,7 +12,11 @@ class Scheduler extends Model
     protected $fillable = [
         'days_id',
         'city_id',
-        'user_id'     
+        'user_id' ,
+        'status'   
     ];
+
+    const STATUS_DRAFT = 'draft';
+    const STATUS_PUBLISHED = 'published';
 
 }

@@ -79,6 +79,8 @@ use App\Http\Controllers\Admin\TaskController;
         Route::group(['prefix' => 'schedulers'], function () {
             Route::get('/', [SchedulerController::class, 'index'])->name('schedulers.index');
             Route::get('/list', [SchedulerController::class, 'show'])->name('schedulers.list');
+            Route::get('/draft', [SchedulerController::class, 'draft'])->name('schedulers.draft');
+
             Route::post('/store', [SchedulerController::class, 'store'])->name('schedulers.store');
             Route::get('/months', [SchedulerController::class, 'getMonths'])->name('schedulers.months');
             Route::get('/days ', [SchedulerController::class, 'getMDays'])->name('schedulers.days ');

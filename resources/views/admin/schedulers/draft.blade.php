@@ -8,30 +8,26 @@
         <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary text-white me-2">
                 <i class="mdi mdi-home"></i>
-            </span> Scheduler
+            </span> Scheduler Draft
         </h3>
 
 
-        <div class="lead">
+        <!-- <div class="lead">
             Manage Scheduler here.
             <a href="{{ route('schedulers.index') }}" class="btn btn-primary btn-sm float-right">Add Schedule</a>
-            &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-
-        </div>
+        </div> -->
         <span id="msg" class="text-sucess text-left"></span>
     </div>
 
     <div class="mt-2">
         @include('admin.layouts.partials.messages')
-
         <p id="msg" style="display:none">Saved</p>
     </div>
 
     <div class="col-lg-12 stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Scheduled Managment System <a href="{{ route('schedulers.draft') }}" class="btn btn-primary btn-sm float-right">Draft</a> </h4>
-
+                <h4 class="card-title">Unpublised Message Giver <a href="{{ route('schedulers.list') }}" class="btn btn-primary btn-sm float-right">Published</a> </h4>
 
                 <table class="table table-bordered data-table">
                     <thead>

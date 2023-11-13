@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\UserData;
+use App\Models\Scheduler;
 
 
 
@@ -52,12 +53,42 @@ class SchedulerRepository
                 ->join('days as d', 'd.id', '=', 's.days_id')           
                 ->join('cities as c', 'c.id', '=', 's.city_id')
                 ->join('users as u', 'u.id', '=', 's.user_id')
-                ->orderBy('s.id','DESC')
+                ->where('s.status', Scheduler::STATUS_PUBLISHED)
+                ->orderBy('d.date','ASC')
                 ->select('d.id','s.id as sid', DB::raw('DATE_FORMAT(d.date, "%d-%b-%Y") as date'), 'd.day', 'c.name as city_name', 'u.name','s.city_id');
 
         return $scheduler->get();
     }
 
+    public function getSchedulesDraft()
+    {
+        $scheduler = DB::table('schedulers as s')
+        ->join('days as d', 'd.id', '=', 's.days_id')
+        ->join('cities as c', 'c.id', '=', 's.city_id')
+        ->join('users as u', 'u.id', '=', 's.user_id')
+        ->where('s.status', Scheduler::STATUS_DRAFT)
+            ->orderBy('d.date', 'ASC')
+            ->select('d.id', 's.id as sid', DB::raw('DATE_FORMAT(d.date, "%d-%b-%Y") as date'), 'd.day', 'c.name as city_name', 'u.name', 's.city_id');
+
+        return $scheduler->get();
+    }
+
+
+    public function getMonthIdYearID($days_id){
+         $details = DB::table('days as d')
+                ->where('d.id', $days_id)
+                ->select('d.year_id','d.month_id');
+                return $details->get(); 
+    }
+
+    public function getAllDaysByMonth($month_id, $year_id){
+        return DB::table('days as d')
+            ->join('months as m', 'm.id', '=', 'd.month_id')
+            ->where('d.month_id', $month_id)
+            ->where('d.year_id', $year_id)
+            ->select('d.id', DB::raw('DATE_FORMAT(d.date, "%d-%b-%Y") as date'))
+            ->get(); 
+    }
 
     public function scheduler($id)
     {
@@ -80,6 +111,16 @@ class SchedulerRepository
             ->orderBy('d.id', 'ASC')
             ->groupBy('d.month_id')
             ->get();
+    }
+
+    public function checkDuplicate($days_id, $member_id, $locaion_id){
+
+        if (Scheduler::where('days_id', '=', $days_id)->where('user_id', '=', $member_id)->where('city_id', '=', $locaion_id)->exists()) {
+           return 0;
+        }else{
+            return 1;
+        }
+
     }
 
 

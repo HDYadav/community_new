@@ -12,6 +12,8 @@
         </h3>
     </div>
 
+
+
     <div class="mt-2">
         @include('admin.layouts.partials.messages')
     </div>
@@ -20,6 +22,9 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Schedulers Managment System</h4>
+                @if (session('error'))
+                <div class="alert"><span style="color: red;"> {{ session('error') }} </span> </div>
+                @endif
 
                 <table class="table table-bordered">
                     <thead>
@@ -27,17 +32,17 @@
 
                             <th class="form-label"> Select the Year</th>
                             <th>
-                                <select name="year" id="year" class="form-control form-control-sm">
-                                    <option value="">Select Year</option>
+                                <select name="year" id="year" class="btn btn-sm btn-outline-primary dropdown-toggle">
+                                    <option value="" class="dropdown-item">Select Year</option>
                                     @foreach($years as $year)
-                                    <option value="{{ $year->id}}"> {{ $year->year}} </option>
+                                    <option value="{{ $year->id}}" class="dropdown-item"> {{ $year->year}} </option>
                                     @endforeach
                                 </select>
                             </th>
                             <th class="form-label"> Select the Month</th>
                             <th>
-                                <select class="form-control form-control-sm" id="month_id" name="month_id">
-                                    <option value="">Select Month</option>
+                                <select class="btn btn-sm btn-outline-primary dropdown-toggle" id="month_id" name="month_id">
+                                    <option value="" class="dropdown-item">Select Month</option>
                                 </select>
                             </th>
 
@@ -55,11 +60,5 @@
 </div>
 
 <script src="{{asset('admin/assets/js/ajaxRequest.js')}}"></script>
-
-
-
-
-
-
 
 @stop
