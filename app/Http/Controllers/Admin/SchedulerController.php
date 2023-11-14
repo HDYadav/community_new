@@ -138,7 +138,7 @@ class SchedulerController extends Controller
                 ->addColumn('action', function ($row) {
                     $edit_icon = asset("admin/assets/images/icon/edit-8-64.png");
                     $del_icon = asset("admin/assets/images/icon/delete-icon.png");
-                    $btn = "<a class='edit btn btn-sm' data-toggle='modal' data-target='#myModal' id='city_id_'.$row->city_id onclick='showModal($row->city_id)' data-num='0'>View</a> <a class='edit btn btn-sm' href='$row->id/edit'><img src=$edit_icon height='25%' width='25%'></a>   <a alt='Delete' onclick='deletess($row->sid)'><img src=$del_icon height='25%' width='25%' ></a>";
+                    $btn = "<a class='edit btn btn-sm' data-toggle='modal' data-target='#myModal' id='city_id_'.$row->city_id onclick='showModal($row->city_id)' data-num='0'>View</a> <a class='edit btn btn-sm' href='$row->id/draft_edit'><img src=$edit_icon height='25%' width='25%'></a>   <a alt='Delete' onclick='deletess($row->sid)'><img src=$del_icon height='25%' width='25%' ></a>";
                     return $btn;
                 })
                 ->rawColumns(['action'])
@@ -246,6 +246,66 @@ class SchedulerController extends Controller
  
 
         return redirect('admin/schedulers/list');
+    }
+
+
+
+    public function draft_edit(Request $request, SchedulerRepository $schedulerRepository)
+    {
+        $years = $schedulerRepository->getYears();
+        $cities = $schedulerRepository->getCities();
+        //  $users =  $schedulerRepository->getUsers();
+        $month = $schedulerRepository->monthList();
+
+        $segment = $request->segment(3);
+        $allMonth =  $schedulerRepository->getMonthIdYearID($segment);
+
+        $days = $schedulerRepository->getAllDaysByMonth($allMonth['0']->month_id, $allMonth['0']->year_id);
+
+        $schedulers =  $schedulerRepository->scheduler($segment);
+
+        return view('admin.schedulers.draft_edit', [
+            'scheduler' => $schedulers,
+            'years' => $years,
+            'months' => $month,
+            'cities' => $cities,
+            'days' => $days
+        ]);
+    }
+
+    public function draft_update(Request $request)
+    {
+        if ($request->input('update')) {
+            $status =  Scheduler::STATUS_PUBLISHED;
+        }
+
+        if ($request->input('draft')) {
+            $status =  Scheduler::STATUS_DRAFT;
+        }
+
+
+        $cityArray = $request->input('city');
+        $members = $request->input('member');
+        $dayIDs = $request->input('dayIDs');
+
+
+        foreach ($cityArray as $index => $city) {
+            if (!empty($members[$index])) {
+                Scheduler::updateOrCreate(
+                    [
+                        'days_id' => $dayIDs[$index],
+                        'city_id' => $city,
+                        'user_id' => $members[$index],
+                    ],
+                    [
+                        'status' => $status,
+                    ]
+                );
+            }
+        }
+
+
+        return redirect('admin/schedulers/draft');
     }
 
 

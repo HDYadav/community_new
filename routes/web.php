@@ -80,6 +80,8 @@ use App\Http\Controllers\Admin\TaskController;
             Route::get('/', [SchedulerController::class, 'index'])->name('schedulers.index');
             Route::get('/list', [SchedulerController::class, 'show'])->name('schedulers.list');
             Route::get('/draft', [SchedulerController::class, 'draft'])->name('schedulers.draft');
+            Route::get('/{schedulers}/draft_edit', [SchedulerController::class, 'draft_edit'])->name('schedulers.draft_edit');
+            Route::post('/draft_update', [SchedulerController::class, 'draft_update'])->name('schedulers.draft_update');
 
             Route::post('/store', [SchedulerController::class, 'store'])->name('schedulers.store');
             Route::get('/months', [SchedulerController::class, 'getMonths'])->name('schedulers.months');
