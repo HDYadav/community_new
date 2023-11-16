@@ -46,12 +46,18 @@ class SchedulerController extends Controller
             // $query = DB::getQueryLog(); 
 
             $collection =  $schedulerRepository->getDaysMonthYear($request);  // Function check month scheduled exists or not 
-            $commaSeparatedIds = $collection->pluck('month_id')->implode(',');  // convert comman seprate array for in query 
+            //$commaSeparatedIds = $collection->pluck('month_id')->implode(',');  // convert comman seprate array for in query 
             
-            $months =  $schedulerRepository->getMonths($request, $commaSeparatedIds);  
-       
+            $months =  $schedulerRepository->getMonths($request);
+
+            
+
+
+            $view = view("admin.schedulers.AjaxDropDown", compact('months', 'collection'))->render();
+            return response()->json(['mhtml' => $view]);
+
            
-            return response()->json(['status' => true, 'message' => 'success', 'data' => $months]);
+          //  return response()->json(['status' => true, 'message' => 'success', 'data' => $months]);
         } catch (\Exception $exe) {
             return response()->json(['status' => false, 'message' => $exe->getMessage()]);
         }
@@ -61,11 +67,13 @@ class SchedulerController extends Controller
     {
         try { 
 
+           // dd($request->year_id);
             $days = $schedulerRepository->getAllDaysByMonth($request->month_id, $request->year_id); 
 
             $years = $schedulerRepository->getYears();
             $cities = $schedulerRepository->getCities();
             $users =  $schedulerRepository->getUsers();  
+
             $view = view("admin.schedulers.ajaxresponse", compact('days', 'years', 'cities', 'users'))->render();
             return response()->json(['html' => $view]);
 

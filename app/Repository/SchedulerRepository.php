@@ -16,13 +16,13 @@ class SchedulerRepository
         return  DB::table('years')->select('id', 'year')->orderBy('id', 'ASC')->get();
     }
 
-    public function getMonths($request, $month_ids)
-    {
+    public function getMonths($request)
+    {  
         $query =    DB::table('days as d')                              
                     ->join('months as m', 'm.id', '=', 'd.month_id')
                     ->where('d.year_id', $request->year_id)
-                    ->whereNotIn('d.month_id', [$month_ids]) 
-                    ->orderBy('d.id', 'ASC')
+                   // ->whereNotIn('d.month_id', $month_ids) 
+                    ->orderBy('d.id', 'DESC')
                     ->groupBy('d.month_id', 'm.id', 'm.month')  
                     ->select('m.id', 'm.month')
                     ->get();
