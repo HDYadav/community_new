@@ -103,14 +103,17 @@ class SchedulerController extends Controller
                 if($exists==1){
                     $scheduler->save();
                 } else{
-                    return back()->with('error', 'Some Speakears is already exists!');
+                    return back()->with('error', 'Data is already exists!');
                  
                 }             
                
             } 
         }
 
-        return redirect('admin/schedulers/list');
+        return redirect('admin/schedulers/saved_scheduler')->with('sucess', 'Records added sucessfully!');
+
+
+      //  return redirect('admin/schedulers/list');
 
     }
 
