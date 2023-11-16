@@ -79,6 +79,7 @@ class UsersController extends Controller
      */
     public function store(StoreUserRequest $request, UserRepository $userRepository)
     {  
+ 
         try {
             DB::beginTransaction(); 
             $userRepository->create($request);
