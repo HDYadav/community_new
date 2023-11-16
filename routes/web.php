@@ -89,7 +89,17 @@ use App\Http\Controllers\Admin\TaskController;
             Route::get('/{schedulers}/edit', [SchedulerController::class, 'edit'])->name('schedulers.edit');
             Route::post('/update', [SchedulerController::class, 'update'])->name('schedulers.update');
             Route::post('/delete', [SchedulerController::class, 'delete'])->name('schedulers.delete');
-            Route::get('/get_city_modal ', [SchedulerController::class, 'getCityModel'])->name('schedulers.get_city_modal '); 
+            Route::get('/get_city_modal ', [SchedulerController::class, 'getCityModel'])->name('schedulers.get_city_modal');
+
+
+            Route::get('/saved_scheduler', [SchedulerController::class, 'savedScheduler'])->name('schedulers.saved_scheduler');
+            Route::get('/all_months', [SchedulerController::class, 'getallMonths'])->name('schedulers.all_months');
+            Route::get('/all_days ', [SchedulerController::class, 'getAllMDays'])->name('schedulers.all_days ');
+
+
+            Route::post('/sch_update', [SchedulerController::class, 'schUpdate'])->name('schedulers.sch_update');
+
+
 
         });
  

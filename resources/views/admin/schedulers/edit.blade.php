@@ -2,7 +2,6 @@
 @section('content')
 
 <style>
-    
     .table-schedule tr th {
         display: flex;
         align-items: center;
@@ -124,9 +123,7 @@
                                                                 <?php
                                                                 foreach ($members as $member) {
                                                                 ?>
-                                                                    <option value="<?php echo $member->id ?>" class="dropdown-item" <?php if ($member->id == @$userID->user_id) {
-                                                                                                                                        echo "selected";
-                                                                                                                                    } ?>><?php echo $member->name ?></option>
+                                                                    <option value="<?php echo $member->id ?>" class="dropdown-item" <?php if ($member->id == @$userID->user_id) { echo "selected"; } ?>><?php echo $member->name ?></option>
                                                                 <?php } ?>
 
                                                             </select>

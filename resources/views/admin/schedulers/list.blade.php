@@ -30,7 +30,7 @@
     <div class="col-lg-12 stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Scheduled Managment System <a href="{{ route('schedulers.draft') }}" class="btn btn-primary btn-sm float-right">Draft</a> </h4>
+                <h4 class="card-title">Published Message Giver List <a href="{{ route('schedulers.draft') }}" class="btn btn-primary btn-sm float-right">Draft</a> </h4>
 
 
                 <table class="table table-bordered data-table">

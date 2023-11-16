@@ -12,8 +12,6 @@
         </h3>
     </div>
 
-
-
     <div class="mt-2">
         @include('admin.layouts.partials.messages')
     </div>
@@ -21,7 +19,7 @@
     <div class="col-lg-12 stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Schedulers Managment System</h4>
+                <h4 class="card-title">Schedulers Managment System <span> <a href="{{ route('schedulers.saved_scheduler') }}" class="btn btn-primary btn-sm float-right">Show Scheduled</a></span> </h4>
                 @if (session('error'))
                 <div class="alert"><span style="color: red;"> {{ session('error') }} </span> </div>
                 @endif

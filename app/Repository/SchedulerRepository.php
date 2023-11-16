@@ -16,16 +16,35 @@ class SchedulerRepository
         return  DB::table('years')->select('id', 'year')->orderBy('id', 'ASC')->get();
     }
 
-    public function getMonths($request)
+    public function getMonths($request, $month_ids)
     {
-        return  DB::table('days as d')
-            ->join('months as m', 'm.id', '=', 'd.month_id')
-            ->where('d.year_id', $request->year_id)
-            ->select('m.id', 'm.month')
-            ->orderBy('d.id', 'ASC')
-            ->groupBy('d.month_id')
-            ->get();
+        $query =    DB::table('days as d')                              
+                    ->join('months as m', 'm.id', '=', 'd.month_id')
+                    ->where('d.year_id', $request->year_id)
+                    ->whereNotIn('d.month_id', [$month_ids]) 
+                    ->orderBy('d.id', 'ASC')
+                    ->groupBy('d.month_id', 'm.id', 'm.month')  
+                    ->select('m.id', 'm.month')
+                    ->get();
+
+      return $query;
+
     }
+
+
+    public function getAllMonths($request)
+    {
+        $query =    DB::table('days as d')
+            ->join('months as m', 'm.id', '=', 'd.month_id')
+            ->where('d.year_id', $request->year_id)            
+            ->orderBy('d.id', 'ASC')
+            ->groupBy('d.month_id', 'm.id', 'm.month')
+            ->select('m.id', 'm.month')
+            ->get();
+
+        return $query;
+    }
+
 
 
     public function getCities()
@@ -119,6 +138,28 @@ class SchedulerRepository
         }
 
     }
+
+
+    public function getDaysMonthYear($request)
+    {
+       return DB::table('days as d')
+                ->join('months as m', 'm.id', '=', 'd.month_id')
+                ->join('schedulers as s', 's.days_id', '=', 'd.id')
+                ->where('year_id', $request->year_id)
+                ->groupBy('m.month')
+                ->select('m.month','m.id as month_id')->get();
+    }
+
+    public function status($days)
+    {
+        $scheduler = DB::table('schedulers as s')
+                    ->where('s.days_id', $days)
+                    ->select('status')
+                    ->first();
+         return $scheduler;
+    }
+
+
 
 
 }

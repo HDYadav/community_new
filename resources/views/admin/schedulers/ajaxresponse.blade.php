@@ -58,7 +58,7 @@
                                       </td>
 
                                       <td>
-                                          <select name="member[]" id="member" class="btn btn-sm btn-outline-primary dropdown-toggle">
+                                          <select name="member[]" id="member" class="btn btn-sm btn-outline-primary dropdown-toggle" required>
 
                                               <option value="" class="dropdown-item">Select speaker</option>
                                               <?php
@@ -86,7 +86,7 @@
         } ?>
       <br>
       <br>
- 
+
       <button type="submit" name="save" value="save" class="btn btn-primary">Save Publish</button>
       <button type="submit" name="draft" value="draft" class="btn btn-primary">Save Draft</button>
 
@@ -108,7 +108,7 @@
               $("#tbd2").css("display", "none");
               $("#tbd3").css("display", "none");
               $("#tbd4").css("display", "none");
-
+            $("#tbd5").css("display", "none");
           });
 
 
@@ -118,7 +118,7 @@
               $("#tbd1").css("display", "none");
               $("#tbd3").css("display", "none");
               $("#tbd4").css("display", "none");
-
+              $("#tbd5").css("display", "none");
           });
 
 
@@ -127,7 +127,7 @@
               $("#tbd1").css("display", "none");
               $("#tbd2").css("display", "none");
               $("#tbd4").css("display", "none");
-
+              $("#tbd5").css("display", "none");
           });
 
           $("#show4").click(function() {
@@ -135,7 +135,17 @@
               $("#tbd1").css("display", "none");
               $("#tbd2").css("display", "none");
               $("#tbd3").css("display", "none");
+              $("#tbd5").css("display", "none");
           });
+
+          $("#show5").click(function() {
+              $("#tbd5").toggle();
+              $("#tbd1").css("display", "none");
+              $("#tbd2").css("display", "none");
+              $("#tbd3").css("display", "none");
+              $("#tbd4").css("display", "none");
+          });
+
 
       });
   </script>
