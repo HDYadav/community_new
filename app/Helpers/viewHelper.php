@@ -46,3 +46,29 @@ function getUserID($day_id, $city_id)
         return  $users;
 }
 
+
+function getUserNameCityName($day_id)
+{
+        $users = DB::table('schedulers as s')
+                ->join('cities as c','c.id','=','s.city_id')
+                ->join('users as u', 'u.id', '=', 's.user_id')
+                ->where('s.days_id', $day_id)
+                ->select('c.name as city_name','u.name')
+                ->get();
+        return  $users;
+}
+
+
+function getSchedular($day_id)
+{
+        $users = DB::table('schedulers as s')
+        ->join('cities as c', 'c.id', '=', 's.city_id')
+        ->join('users as u', 'u.id', '=', 's.user_id')
+        ->where('s.days_id', $day_id)
+        ->select('c.name as city_name', 'u.name')
+        ->get();
+        return  $users;
+}
+
+
+

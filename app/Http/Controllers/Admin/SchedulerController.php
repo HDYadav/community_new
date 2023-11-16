@@ -9,7 +9,7 @@ use App\Repository\SchedulerRepository;
 use App\Models\Scheduler;
 use Yajra\DataTables\DataTables; 
 use Illuminate\Support\Collection;
-
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class SchedulerController extends Controller
 {
@@ -358,6 +358,19 @@ class SchedulerController extends Controller
     public function schUpdate(Request $request, SchedulerRepository $schedulerRepository)
     {
 
+
+        if ($request->input('pdf')) {
+
+            $days = $schedulerRepository->getAllDaysByMonth($request->m_id, $request->year); 
+            $month = $days['0']->month; 
+        //   return view('admin.schedulers.Sample_pdf', compact('days', 'month')); 
+            $pdf = PDF::loadView('admin.schedulers.Sample_pdf', compact('days', 'month')); 
+            return $pdf->download('speaker_list.pdf');
+          
+        }
+
+
+
         $collection = $schedulerRepository->getAllDaysByMonth($request->m_id, $request->year);  
         foreach($collection as $days){
             $del =   Scheduler::where('days_id', $days->id)->delete();
@@ -374,6 +387,9 @@ class SchedulerController extends Controller
         if ($request->input('draft')) {
             $status =  Scheduler::STATUS_DRAFT;
         }
+
+
+
 
 
         foreach ($cityArray as $index => $city) {

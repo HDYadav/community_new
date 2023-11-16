@@ -102,7 +102,7 @@ class SchedulerRepository
             ->join('months as m', 'm.id', '=', 'd.month_id')
             ->where('d.month_id', $month_id)
             ->where('d.year_id', $year_id)
-            ->select('d.id', DB::raw('DATE_FORMAT(d.date, "%d-%b-%Y") as date'))
+            ->select('d.id', DB::raw('DATE_FORMAT(d.date, "%d-%b-%Y") as date'),'m.month')
             ->get(); 
     }
 

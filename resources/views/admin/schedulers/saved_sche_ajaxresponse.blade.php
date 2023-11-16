@@ -12,7 +12,7 @@
       <tbody>
 
           <tr>
-              <td colspan="2" align="center"><strong> <?php echo ucfirst($status->status); ?> Scheduled List</strong> </td>
+              <td colspan="2" align="center"><strong> <?php echo ucfirst(@$status->status); ?> Scheduled List</strong> </td>
           </tr>
       </tbody>
   </table>
@@ -93,8 +93,7 @@
   <button type="submit" name="update" value="save" class="btn btn-primary">Save & Publish</button>
   <button type="submit" name="draft" value="draft" class="btn btn-primary">Save Draft</button>
 
-  <button type="submit" name="draft" value="draft" class="btn btn-primary">Download PDF</button>
-
+  <button type="submit" name="pdf" value="pdf" class="btn btn-primary">Download PDF </button>
 
 
 

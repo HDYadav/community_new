@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\MessageGiverController;
 use App\Http\Controllers\Admin\SchedulerController;
 use App\Http\Controllers\Admin\TaskController;
+use App\Http\Controllers\Admin\PdfController;
 
 /*
 |--------------------------------------------------------------------------
@@ -95,9 +96,9 @@ use App\Http\Controllers\Admin\TaskController;
             Route::get('/saved_scheduler', [SchedulerController::class, 'savedScheduler'])->name('schedulers.saved_scheduler');
             Route::get('/all_months', [SchedulerController::class, 'getallMonths'])->name('schedulers.all_months');
             Route::get('/all_days ', [SchedulerController::class, 'getAllMDays'])->name('schedulers.all_days ');
-
-
             Route::post('/sch_update', [SchedulerController::class, 'schUpdate'])->name('schedulers.sch_update');
+
+            Route::post('download-pdf', [PdfController::class, 'downloadPDF'])->name('schedulers.download-pdf');
 
 
 

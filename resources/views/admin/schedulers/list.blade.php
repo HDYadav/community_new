@@ -160,8 +160,7 @@
 
             localStorage.clear();
         }
-
-
+ 
     });
 </script>
 
