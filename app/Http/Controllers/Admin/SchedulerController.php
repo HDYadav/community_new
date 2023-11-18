@@ -39,25 +39,15 @@ class SchedulerController extends Controller
 
     public function getMonths(Request $request, SchedulerRepository $schedulerRepository)
     {
-        try {
+        try { 
 
-            // DB::enableQueryLog();
-
-            // $query = DB::getQueryLog(); 
-
-            $collection =  $schedulerRepository->getDaysMonthYear($request);  // Function check month scheduled exists or not 
-            //$commaSeparatedIds = $collection->pluck('month_id')->implode(',');  // convert comman seprate array for in query 
-            
-            $months =  $schedulerRepository->getMonths($request);
-
-            
-
+            $collection =  $schedulerRepository->getDaysMonthYear($request);  // Function check month scheduled exists or not  
+            $month_ids_array = explode(',', $collection);  // convert the string to array
+            $months =  $schedulerRepository->getMonths($request, $month_ids_array);            
 
             $view = view("admin.schedulers.AjaxDropDown", compact('months', 'collection'))->render();
             return response()->json(['mhtml' => $view]);
-
-           
-          //  return response()->json(['status' => true, 'message' => 'success', 'data' => $months]);
+        
         } catch (\Exception $exe) {
             return response()->json(['status' => false, 'message' => $exe->getMessage()]);
         }
@@ -74,8 +64,14 @@ class SchedulerController extends Controller
             $cities = $schedulerRepository->getCities();
             $users =  $schedulerRepository->getUsers();  
 
-            $view = view("admin.schedulers.ajaxresponse", compact('days', 'years', 'cities', 'users'))->render();
-            return response()->json(['html' => $view]);
+           // dd(count($days));
+
+            if(count($days) > 0) { 
+                $view = view("admin.schedulers.ajaxresponse", compact('days', 'years', 'cities', 'users'))->render();
+                return response()->json(['html2' => $view]);
+            }else{
+                return response()->json(['html2' => '']);
+            }
 
            
         } catch (\Exception $exe) {
@@ -354,12 +350,17 @@ class SchedulerController extends Controller
             $cities = $schedulerRepository->getCities();
             $users =  $schedulerRepository->getUsers();
 
-            $status = $schedulerRepository->status($days['0']->id); 
+            $status = $schedulerRepository->status(@$days['0']->id);
+          
+
+            if (count($days) > 0) {
+                $view = view("admin.schedulers.saved_sche_ajaxresponse", compact('days', 'years', 'cities', 'users', 'status'))->render();
+                return response()->json(['html' => $view]);
+            } else {
+                return response()->json(['html' => '']);
+            } 
+
             
-
-
-            $view = view("admin.schedulers.saved_sche_ajaxresponse", compact('days', 'years', 'cities', 'users', 'status'))->render();
-            return response()->json(['html' => $view]);
         } catch (\Exception $exe) {
             return response()->json(['status' => false, 'message' => $exe->getMessage()]);
         }

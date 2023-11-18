@@ -2,9 +2,9 @@
     <option value="" class="dropdown-item">Select Month</option>
     @foreach($months as $key => $month)
     <?php
-    $monthID = isset($collection[$key]) ? $collection[$key]->month_id : 0;
+ //   $monthID = isset($collection[$key]) ? $collection[$key]->month_id : 0;
     ?>
-    <option value="{{ $month->id }}" class="dropdown-item" <?php if (@$monthID == @$month->id) { ?> disabled <?php } ?>>
+    <option value="{{ $month->id }}" class="dropdown-item"  >
         {{ $month->month  }}
     </option>
     @endforeach

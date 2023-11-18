@@ -1,7 +1,5 @@
 @extends('admin.layouts.app')
-@section('content')
-
-
+@section('content') 
 
 <div class="content-wrapper">
     <div class="page-header">
@@ -47,7 +45,7 @@
                         </tr>
                     </thead>
                 </table>
-                <div id="scheduler">
+                <div id="index_scheduler">
 
                 </div>
 

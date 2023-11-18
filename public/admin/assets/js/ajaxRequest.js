@@ -46,8 +46,13 @@ $("#year").on("change", function (event) {
 
     $("#month_id").on("change", function(event) {
         let month_id = $(this).val();
-        let year_id = localStorage.getItem("year_id")
-        $('#scheduler').show(); 
+        let year_id = localStorage.getItem("year_id");
+
+         console.log(year_id);
+         
+         $('#index_scheduler').show();  
+        
+      //  $('#scheduler').hide();
         
         $.ajaxSetup({
             headers: {
@@ -60,9 +65,8 @@ $("#year").on("change", function (event) {
             data: {
                 'month_id': month_id,'year_id': year_id,
             },
-            success: function (data) { 
-                  
-                $("#scheduler").html(data.html);  
+            success: function (data) {  
+                $("#index_scheduler").html(data.html2);  
                
 
             }

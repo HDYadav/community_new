@@ -16,17 +16,18 @@ class SchedulerRepository
         return  DB::table('years')->select('id', 'year')->orderBy('id', 'ASC')->get();
     }
 
-    public function getMonths($request)
+    public function getMonths($request, $month_ids)
     {  
-        $query =    DB::table('days as d')                              
+      
+        $query =   DB::table('days as d')                              
                     ->join('months as m', 'm.id', '=', 'd.month_id')
                     ->where('d.year_id', $request->year_id)
-                   // ->whereNotIn('d.month_id', $month_ids) 
-                    ->orderBy('d.id', 'DESC')
+                    ->whereNotIn('d.month_id', $month_ids)                    
+                    ->orderBy('d.id', 'ASC')
                     ->groupBy('d.month_id', 'm.id', 'm.month')  
                     ->select('m.id', 'm.month')
                     ->get();
-
+ 
       return $query;
 
     }
@@ -147,7 +148,8 @@ class SchedulerRepository
                 ->join('schedulers as s', 's.days_id', '=', 'd.id')
                 ->where('year_id', $request->year_id)
                 ->groupBy('m.month')
-                ->select('m.month','m.id as month_id')->get();
+                ->orderBy('m.id','ASC')
+                 ->pluck('m.id as month_id')->implode(',');
     }
 
     public function status($days)
