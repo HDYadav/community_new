@@ -28,8 +28,8 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Schedulers Managment System <span> <a href="{{ route('schedulers.index') }}" class="btn btn-primary btn-sm float-right">Add Schedule</a></span></h4>
-                @if (session('error'))
-                <div class="alert"><span style="color: red;"> {{ session('error') }} </span> </div>
+                @if (session('sucess'))
+                <div class="alert"><span style="color: green;"> {{ session('sucess') }} </span> </div>
                 @endif
 
                 <form method="post" action="{{route('schedulers.sch_update')}}">

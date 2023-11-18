@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('content') 
+@section('content')
 
 <div class="content-wrapper">
     <div class="page-header">
@@ -18,8 +18,8 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Schedulers Managment System <span> <a href="{{ route('schedulers.saved_scheduler') }}" class="btn btn-primary btn-sm float-right">Show Scheduled</a></span> </h4>
-                @if (session('error'))
-                <div class="alert"><span style="color: red;"> {{ session('error') }} </span> </div>
+                @if (session('sucess'))
+                <div class="alert"><span style="color: green;"> {{ session('sucess') }} </span> </div>
                 @endif
 
                 <table class="table table-bordered">
@@ -56,5 +56,8 @@
 </div>
 
 <script src="{{asset('admin/assets/js/ajaxRequest.js')}}"></script>
+
+
+
 
 @stop

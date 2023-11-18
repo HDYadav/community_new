@@ -64,9 +64,7 @@
                                           <?php
                                             foreach ($members as $member) {
                                             ?>
-                                              <option value="<?php echo $member->id ?>" class="dropdown-item" <?php if ($member->id == @$userID->user_id) {
-                                                                                                                    echo "selected";
-                                                                                                                } ?>><?php echo $member->name ?></option>
+                                              <option value="<?php echo $member->id ?>" class="dropdown-item" <?php if ($member->id == @$userID->user_id) {echo "selected";} ?>><?php echo $member->name ?></option>
                                           <?php } ?>
 
                                       </select>
@@ -172,12 +170,8 @@
 
   <script>
       function showModal(modalId) {
-          //   console.log(modalId)
-          //   $('#myModal').modal('show'); // Show modal
 
           var city_id = modalId
-          // console.log(city_id);
-
           $.ajaxSetup({
               headers: {
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

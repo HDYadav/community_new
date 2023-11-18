@@ -107,14 +107,14 @@ class SchedulerController extends Controller
                 if($exists==1){
                     $scheduler->save();
                 } else{
-                    return back()->with('error', 'Data is already exists!');
+                    return back()->with('sucess', 'Reocords sucessfully inserted!');
                  
                 }             
                
             } 
         }
 
-        return redirect('admin/schedulers/saved_scheduler')->with('sucess', 'Records added sucessfully!');
+        return redirect('admin/schedulers/saved_scheduler')->with('sucess', 'Records have been added successfully!');
 
 
       //  return redirect('admin/schedulers/list');
@@ -398,10 +398,7 @@ class SchedulerController extends Controller
         }
         if ($request->input('draft')) {
             $status =  Scheduler::STATUS_DRAFT;
-        }
-
-
-
+        } 
 
 
         foreach ($cityArray as $index => $city) {
@@ -418,7 +415,7 @@ class SchedulerController extends Controller
             }
         }
 
-        return back()->with('sucess', 'Records sucessfylly updated!'); 
+        return back()->with('sucess', 'Records have been updated successfully!'); 
     
       
     }
