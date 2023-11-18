@@ -415,12 +415,8 @@ class SchedulerController extends Controller
             }
         }
 
-        return back()->with('sucess', 'Records have been updated successfully!'); 
-    
+        return back()->with('sucess', 'Records have been updated successfully!');  
       
-    }
-
-
-
+    } 
 
 }
