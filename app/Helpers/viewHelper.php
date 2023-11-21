@@ -25,6 +25,32 @@ function group_color($colour=null)
     return $colour;
 }
 
+
+function pdf_group_color($colour = null)
+{
+
+        switch ($colour) {
+                case ('0'):
+                        $colour = 'background-color: #f2f8ee';
+                        break;
+                case ('1'):
+                        $colour = 'background-color:#fff3ff';
+                        break;
+                case ('2'):
+                        $colour = 'color:green;';
+                        break;
+                case ('3'):
+                        $colour = 'color:red;';
+                        break;
+                default:
+                        $colour = 'color:black;';
+        }
+
+        return $colour;
+}
+
+
+
 function getUsers()
         {
                 $users = DB::table('users as u')

@@ -98,7 +98,7 @@ use App\Http\Controllers\Admin\PdfController;
             Route::get('/all_days ', [SchedulerController::class, 'getAllMDays'])->name('schedulers.all_days ');
             Route::post('/sch_update', [SchedulerController::class, 'schUpdate'])->name('schedulers.sch_update');
 
-            Route::post('download-pdf', [PdfController::class, 'downloadPDF'])->name('schedulers.download-pdf');
+            // Route::post('download-pdf', [PdfController::class, 'downloadPDF'])->name('schedulers.download-pdf');
 
 
 

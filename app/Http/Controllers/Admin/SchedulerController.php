@@ -375,7 +375,7 @@ class SchedulerController extends Controller
 
             $days = $schedulerRepository->getAllDaysByMonth($request->m_id, $request->year); 
             $month = $days['0']->month; 
-        //   return view('admin.schedulers.Sample_pdf', compact('days', 'month')); 
+            // return view('admin.schedulers.Sample_pdf', compact('days', 'month')); 
             $pdf = PDF::loadView('admin.schedulers.Sample_pdf', compact('days', 'month')); 
             return $pdf->download('speaker_list.pdf');
           
