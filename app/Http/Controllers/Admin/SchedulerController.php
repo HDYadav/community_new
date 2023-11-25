@@ -7,20 +7,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Repository\SchedulerRepository;
 use App\Models\Scheduler;
-use Yajra\DataTables\DataTables; 
+use Yajra\DataTables\DataTables;
 use Illuminate\Support\Collection;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class SchedulerController extends Controller
 {
-    
-    public function index(SchedulerRepository $schedulerRepository){
+
+    public function index(SchedulerRepository $schedulerRepository)
+    {
 
         $years = $schedulerRepository->getYears();
-        $cities = $schedulerRepository->getCities();      
-        $users =  $schedulerRepository->getUsers();  
+        $cities = $schedulerRepository->getCities();
+        $users =  $schedulerRepository->getUsers();
 
-        return view('admin.schedulers.index',compact('years', 'cities'));
+        return view('admin.schedulers.index', compact('years', 'cities'));
     }
 
 
@@ -39,15 +40,14 @@ class SchedulerController extends Controller
 
     public function getMonths(Request $request, SchedulerRepository $schedulerRepository)
     {
-        try { 
+        try {
 
             $collection =  $schedulerRepository->getDaysMonthYear($request);  // Function check month scheduled exists or not  
             $month_ids_array = explode(',', $collection);  // convert the string to array
-            $months =  $schedulerRepository->getMonths($request, $month_ids_array);            
+            $months =  $schedulerRepository->getMonths($request, $month_ids_array);
 
             $view = view("admin.schedulers.AjaxDropDown", compact('months', 'collection'))->render();
             return response()->json(['mhtml' => $view]);
-        
         } catch (\Exception $exe) {
             return response()->json(['status' => false, 'message' => $exe->getMessage()]);
         }
@@ -55,47 +55,46 @@ class SchedulerController extends Controller
 
     public function getMDays(Request $request, SchedulerRepository $schedulerRepository)
     {
-        try { 
+        try {
 
-           // dd($request->year_id);
-            $days = $schedulerRepository->getAllDaysByMonth($request->month_id, $request->year_id); 
+            // dd($request->year_id);
+            $days = $schedulerRepository->getAllDaysByMonth($request->month_id, $request->year_id);
 
             $years = $schedulerRepository->getYears();
             $cities = $schedulerRepository->getCities();
-            $users =  $schedulerRepository->getUsers();  
+            $users =  $schedulerRepository->getUsers();
 
-           // dd(count($days));
+            // dd(count($days));
 
-            if(count($days) > 0) { 
+            if (count($days) > 0) {
                 $view = view("admin.schedulers.ajaxresponse", compact('days', 'years', 'cities', 'users'))->render();
                 return response()->json(['html2' => $view]);
-            }else{
+            } else {
                 return response()->json(['html2' => '']);
             }
-
-           
         } catch (\Exception $exe) {
             return response()->json(['status' => false, 'message' => $exe->getMessage()]);
         }
     }
 
-    public function store(Request $request, SchedulerRepository $schedulerRepository){ 
+    public function store(Request $request, SchedulerRepository $schedulerRepository)
+    {
 
-            $cityArray = $request->input('city');
-            $members = $request->input('member');
-            $dayIDs = $request->input('dayIDs');  
+        $cityArray = $request->input('city');
+        $members = $request->input('member');
+        $dayIDs = $request->input('dayIDs');
 
-            if($request->input('save')){
-                $status =  Scheduler::STATUS_PUBLISHED;
-            }
-            if ($request->input('draft')) {
-                $status =  Scheduler::STATUS_DRAFT;
-            }
+        if ($request->input('save')) {
+            $status =  Scheduler::STATUS_PUBLISHED;
+        }
+        if ($request->input('draft')) {
+            $status =  Scheduler::STATUS_DRAFT;
+        }
 
- 
-        foreach($cityArray as $index => $city) {
- 
-            if(!empty($members[$index])) {
+
+        foreach ($cityArray as $index => $city) {
+
+            if (!empty($members[$index])) {
 
                 $exists = $schedulerRepository->checkDuplicate($dayIDs[$index], $members[$index], $city);
 
@@ -104,30 +103,28 @@ class SchedulerController extends Controller
                 $scheduler->city_id = $city;
                 $scheduler->user_id = $members[$index];
                 $scheduler->status = $status;
-                if($exists==1){
+                if ($exists == 1) {
                     $scheduler->save();
-                } else{
+                } else {
                     return back()->with('sucess', 'Reocords sucessfully inserted!');
-                 
-                }             
-               
-            } 
+                }
+            }
         }
 
         return redirect('admin/schedulers/saved_scheduler')->with('sucess', 'Records have been added successfully!');
 
 
-      //  return redirect('admin/schedulers/list');
+        //  return redirect('admin/schedulers/list');
 
     }
 
 
     public function show(Request $request, SchedulerRepository $schedulerRepository)
-    { 
+    {
         if ($request->ajax()) {
 
             $scheduler = $schedulerRepository->getSchedules($request);
-            
+
             return Datatables::of($scheduler)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -147,7 +144,7 @@ class SchedulerController extends Controller
     {
         if ($request->ajax()) {
 
-            $scheduler = $schedulerRepository->getSchedulesDraft($request); 
+            $scheduler = $schedulerRepository->getSchedulesDraft($request);
             return Datatables::of($scheduler)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -171,8 +168,8 @@ class SchedulerController extends Controller
         try {
             $input = $request->all();
 
-            $input = request()->except(['_token']); 
-            
+            $input = request()->except(['_token']);
+
             DB::table('schedulers')->where('id', $input['id'])->delete();
 
             $msg = 'Scheduler successfully deleted';
@@ -190,33 +187,32 @@ class SchedulerController extends Controller
             // DB::enableQueryLog();
             //return $request->city_id;
             $members = DB::table('users as u')
-                ->join('cities as c', 'c.id', '=', 'u.location_id')                
-                ->where('u.location_id', $request->city_id)               
-                ->select('u.name','u.mobile', 'u.address')
+                ->join('cities as c', 'c.id', '=', 'u.location_id')
+                ->where('u.location_id', $request->city_id)
+                ->select('u.name', 'u.mobile', 'u.address')
                 ->get();
-                //dd($members);
+            //dd($members);
 
             $view = view("admin.schedulers.members_ajax", compact('members'))->render();
-            return response()->json(['html' => $view]); 
-
+            return response()->json(['html' => $view]);
         } catch (\Exception $exe) {
             return response()->json(['status' => false, 'message' => $exe->getMessage()]);
         }
     }
 
     public function edit(Request $request, SchedulerRepository $schedulerRepository)
-    {  
+    {
         $years = $schedulerRepository->getYears();
         $cities = $schedulerRepository->getCities();
-      //  $users =  $schedulerRepository->getUsers();
+        //  $users =  $schedulerRepository->getUsers();
         $month = $schedulerRepository->monthList();
 
         $segment = $request->segment(3);
-        $allMonth =  $schedulerRepository->getMonthIdYearID($segment);   
+        $allMonth =  $schedulerRepository->getMonthIdYearID($segment);
 
-        $days = $schedulerRepository->getAllDaysByMonth($allMonth['0']->month_id,$allMonth['0']->year_id);  
+        $days = $schedulerRepository->getAllDaysByMonth($allMonth['0']->month_id, $allMonth['0']->year_id);
 
-        $schedulers =  $schedulerRepository->scheduler($segment); 
+        $schedulers =  $schedulerRepository->scheduler($segment);
 
         return view('admin.schedulers.edit', [
             'scheduler' => $schedulers,
@@ -225,8 +221,6 @@ class SchedulerController extends Controller
             'cities' => $cities,
             'days' => $days
         ]);
-
-
     }
 
     public function update(Request $request)
@@ -243,10 +237,10 @@ class SchedulerController extends Controller
         $cityArray = $request->input('city');
         $members = $request->input('member');
         $dayIDs = $request->input('dayIDs');
-      
+
 
         foreach ($cityArray as $index => $city) {
-            if (!empty($members[$index])) {               
+            if (!empty($members[$index])) {
                 Scheduler::updateOrCreate(
                     [
                         'days_id' => $dayIDs[$index],
@@ -259,7 +253,7 @@ class SchedulerController extends Controller
                 );
             }
         }
- 
+
 
         return redirect('admin/schedulers/list');
     }
@@ -302,9 +296,9 @@ class SchedulerController extends Controller
 
         $cityArray = $request->input('city');
         $members = $request->input('member');
-        $dayIDs = $request->input('dayIDs'); 
+        $dayIDs = $request->input('dayIDs');
 
-       // dd($members);
+        // dd($members);
 
         foreach ($cityArray as $index => $city) {
             if (!empty($members[$index])) {
@@ -329,7 +323,7 @@ class SchedulerController extends Controller
 
     public function getAllMonths(Request $request, SchedulerRepository $schedulerRepository)
     {
-        try { 
+        try {
 
             $months =  $schedulerRepository->getAllMonths($request);
 
@@ -342,7 +336,7 @@ class SchedulerController extends Controller
 
     public function getAllMDays(Request $request, SchedulerRepository $schedulerRepository)
     {
-        try { 
+        try {
 
             $days = $schedulerRepository->getAllDaysByMonth($request->month_id, $request->year_id);
 
@@ -351,16 +345,17 @@ class SchedulerController extends Controller
             $users =  $schedulerRepository->getUsers();
 
             $status = $schedulerRepository->status(@$days['0']->id);
-          
+
+            $monthId = $request->month_id;
+            $yearId = $request->year_id;
+
 
             if (count($days) > 0) {
-                $view = view("admin.schedulers.saved_sche_ajaxresponse", compact('days', 'years', 'cities', 'users', 'status'))->render();
+                $view = view("admin.schedulers.saved_sche_ajaxresponse", compact('days', 'years', 'cities', 'users', 'status', 'monthId', 'yearId'))->render();
                 return response()->json(['html' => $view]);
             } else {
                 return response()->json(['html' => '']);
-            } 
-
-            
+            }
         } catch (\Exception $exe) {
             return response()->json(['status' => false, 'message' => $exe->getMessage()]);
         }
@@ -370,24 +365,20 @@ class SchedulerController extends Controller
     public function schUpdate(Request $request, SchedulerRepository $schedulerRepository)
     {
 
+        // if($request->input('pdf')) {
 
-        if ($request->input('pdf')) {
+        //     $days = $schedulerRepository->getAllDaysByMonth($request->m_id, $request->year);
+        //     $month = $days['0']->month;
+        //     // return view('admin.schedulers.Sample_pdf', compact('days', 'month')); 
+        //     $pdf = PDF::loadView('admin.schedulers.Sample_pdf', compact('days', 'month'));
+        //     return $pdf->download('speaker_list.pdf');
+        // }
 
-            $days = $schedulerRepository->getAllDaysByMonth($request->m_id, $request->year); 
-            $month = $days['0']->month; 
-            // return view('admin.schedulers.Sample_pdf', compact('days', 'month')); 
-            $pdf = PDF::loadView('admin.schedulers.Sample_pdf', compact('days', 'month')); 
-            return $pdf->download('speaker_list.pdf');
-          
+        // Remove the data before update
+        $collection = $schedulerRepository->getAllDaysByMonth($request->m_id, $request->year);
+        foreach ($collection as $days) {
+           Scheduler::where('days_id', $days->id)->delete();
         }
-
-
-
-        $collection = $schedulerRepository->getAllDaysByMonth($request->m_id, $request->year);  
-        foreach($collection as $days){
-            $del =   Scheduler::where('days_id', $days->id)->delete();
-        } 
-       
 
         $cityArray = $request->input('city');
         $members = $request->input('member');
@@ -398,12 +389,12 @@ class SchedulerController extends Controller
         }
         if ($request->input('draft')) {
             $status =  Scheduler::STATUS_DRAFT;
-        } 
+        }
 
 
         foreach ($cityArray as $index => $city) {
 
-            if (!empty($members[$index])) { 
+            if (!empty($members[$index])) {
 
                 $scheduler = new Scheduler();
                 $scheduler->days_id = $dayIDs[$index];
@@ -411,12 +402,13 @@ class SchedulerController extends Controller
                 $scheduler->user_id = $members[$index];
                 $scheduler->status = $status;
                 $scheduler->save();
-                 
             }
         }
 
-        return back()->with('sucess', 'Records have been updated successfully!');  
-      
-    } 
+        return back()->with('sucess', 'Records have been updated successfully!');
+    }
+
+
+    
 
 }

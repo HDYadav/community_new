@@ -64,7 +64,9 @@
                                           <?php
                                             foreach ($members as $member) {
                                             ?>
-                                              <option value="<?php echo $member->id ?>" class="dropdown-item" <?php if ($member->id == @$userID->user_id) {echo "selected";} ?>><?php echo $member->name ?></option>
+                                              <option value="<?php echo $member->id ?>" class="dropdown-item" <?php if ($member->id == @$userID->user_id) {
+                                                                                                                    echo "selected";
+                                                                                                                } ?>><?php echo $member->name ?></option>
                                           <?php } ?>
 
                                       </select>
@@ -91,9 +93,8 @@
   <button type="submit" name="update" value="save" class="btn btn-primary">Save & Publish</button>
   <button type="submit" name="draft" value="draft" class="btn btn-primary">Save Draft</button>
 
-  <button type="submit" name="pdf" value="pdf" class="btn btn-primary">Download PDF </button>
-
-
+  <!-- <button type="submit" name="pdf" value="pdf" class="btn btn-primary">Download PDF </button> --> 
+  <a href="{{@$yearId}}/{{@$monthId}}/pdf" class="btn btn-primary btn-sm">Download PDF </a> 
 
   <script>
       $(function() {

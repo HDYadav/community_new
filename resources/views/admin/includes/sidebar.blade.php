@@ -24,7 +24,7 @@
         <i class="mdi mdi-home menu-icon"></i>
       </a>
     </li>
-    @role(['super admin','sub admin'])
+    @role(['super admin','sub admin','schedule editor','schedule viewer'])
     <li class="nav-item">
       <a href="{{ route('users.index') }}" class="nav-link">Users</a>
       <a href="{{ route('city.index') }}" class="nav-link">Places</a>

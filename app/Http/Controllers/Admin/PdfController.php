@@ -13,21 +13,12 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class PdfController extends Controller
 {
-    public function downloadPDF(Request$request, SchedulerRepository $schedulerRepository)
-    {
-        $collection = $schedulerRepository->getAllDaysByMonth($request->m_id, $request->year);  
-
-        dd($collection);
-        $data = [
-            "full_name" => "john do",
-            "email" => "john@example.com",
-            "age" => "23",
-            "phone" => "998877XXXX",
-        ];
-
-       
-         $pdf = PDF::loadView('admin.schedulers.Sample_pdf', $data);
-        
-        return $pdf->download('teknowize.pdf');
+    public function downloadPDF($yearID, $monthID, SchedulerRepository $schedulerRepository)
+    { 
+        $days = $schedulerRepository->getAllDaysByMonth($monthID,$yearID);
+        $month = $days['0']->month;
+        // return view('admin.schedulers.Sample_pdf', compact('days', 'month')); 
+        $pdf = PDF::loadView('admin.schedulers.Sample_pdf', compact('days', 'month'));
+        return $pdf->download('speaker_list.pdf');
     }
 }

@@ -78,11 +78,13 @@ use App\Http\Controllers\Admin\PdfController;
 
 
         Route::group(['prefix' => 'schedulers'], function () {
+
             Route::get('/', [SchedulerController::class, 'index'])->name('schedulers.index');
-            Route::get('/list', [SchedulerController::class, 'show'])->name('schedulers.list');
-            Route::get('/draft', [SchedulerController::class, 'draft'])->name('schedulers.draft');
-            Route::get('/{schedulers}/draft_edit', [SchedulerController::class, 'draft_edit'])->name('schedulers.draft_edit');
-            Route::post('/draft_update', [SchedulerController::class, 'draft_update'])->name('schedulers.draft_update');
+
+             Route::get('/list', [SchedulerController::class, 'show'])->name('schedulers.list');
+            // Route::get('/draft', [SchedulerController::class, 'draft'])->name('schedulers.draft');
+            // Route::get('/{schedulers}/draft_edit', [SchedulerController::class, 'draft_edit'])->name('schedulers.draft_edit');
+            // Route::post('/draft_update', [SchedulerController::class, 'draft_update'])->name('schedulers.draft_update');
 
             Route::post('/store', [SchedulerController::class, 'store'])->name('schedulers.store');
             Route::get('/months', [SchedulerController::class, 'getMonths'])->name('schedulers.months');
@@ -95,11 +97,12 @@ use App\Http\Controllers\Admin\PdfController;
 
             Route::get('/saved_scheduler', [SchedulerController::class, 'savedScheduler'])->name('schedulers.saved_scheduler');
             Route::get('/all_months', [SchedulerController::class, 'getallMonths'])->name('schedulers.all_months');
-            Route::get('/all_days ', [SchedulerController::class, 'getAllMDays'])->name('schedulers.all_days ');
+            Route::get('/all_days ', [SchedulerController::class, 'getAllMDays'])->name('schedulers.all_days');
             Route::post('/sch_update', [SchedulerController::class, 'schUpdate'])->name('schedulers.sch_update');
 
-            // Route::post('download-pdf', [PdfController::class, 'downloadPDF'])->name('schedulers.download-pdf');
+           //  Route::get('download-pdf', [PdfController::class, 'downloadPDF'])->name('schedulers.download-pdf'); 
 
+            Route::get('/{schedulers}/{pdf}/pdf', [PdfController::class, 'downloadPDF'])->name('schedulers.pdf'); 
 
 
         });
