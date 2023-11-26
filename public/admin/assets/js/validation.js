@@ -172,9 +172,147 @@ $(document ).ready(function() {
     
                 },
                  
+            }); 
+     });  
+    
+    $("#year_info").on("submit", function (event) {  
+        event.preventDefault();   
+        var formData = new FormData(this);
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        }); 
+        
+            $.ajax({
+                url: baseUrlAdmin + "/years/store",
+                method: "POST",
+                data: formData,
+                dataType: "json",
+                processData: false,
+                contentType: false,  
+                success: function (data) {                      
+    
+                    if (data.data =='true') {
+                        localStorage.setItem("message",'Records sucessfylly created');
+                        window.location.assign(baseUrlAdmin + "/years");  
+                    }                   
+                   
+                    $.each(data.data,function(field_name,error){
+                        $('span[id^="'+field_name+'"]').remove();
+                    $(document).find('[name='+field_name+']').after('<span id="'+field_name+'" class="text-danger text-left">' +error+ '</span>')
+                    })
+    
+                },
+                 
             });
         
         
-     });  
+    }); 
+
+
+    $("#year_info_edit").on("submit", function (event) {  
+        event.preventDefault();   
+        var formData = new FormData(this);
+       
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        }); 
+        
+            $.ajax({
+                url: baseUrlAdmin + "/years/update",
+                method: "POST",
+                data: formData,
+                dataType: "json",
+                processData: false,
+                contentType: false,  
+                success: function (data) {                      
+    
+                    if (data.data =='true') {
+                        localStorage.setItem("message",'Records sucessfylly updated');
+                        window.location.assign(baseUrlAdmin + "/years");  
+                    }                   
+                   
+                    $.each(data.data,function(field_name,error){
+                        $('span[id^="'+field_name+'"]').remove();
+                    $(document).find('[name='+field_name+']').after('<span id="'+field_name+'" class="text-danger text-left">' +error+ '</span>')
+                    })
+    
+                },
+                 
+            }); 
+    }); 
+
+     $("#day_info").on("submit", function (event) {  
+        event.preventDefault();   
+        var formData = new FormData(this);
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        }); 
+        
+            $.ajax({
+                url: baseUrlAdmin + "/days/store",
+                method: "POST",
+                data: formData,
+                dataType: "json",
+                processData: false,
+                contentType: false,  
+                success: function (data) {                      
+    
+                    if (data.data =='true') {
+                        localStorage.setItem("message",'Records sucessfylly created');
+                        window.location.assign(baseUrlAdmin + "/days");  
+                    }                   
+                   
+                    $.each(data.data,function(field_name,error){
+                        $('span[id^="'+field_name+'"]').remove();
+                    $(document).find('[name='+field_name+']').after('<span id="'+field_name+'" class="text-danger text-left">' +error+ '</span>')
+                    })
+    
+                },
+                 
+            });        
+        
+     }); 
+    
+    
+     $("#day_edit_info").on("submit", function (event) {  
+        event.preventDefault();   
+        var formData = new FormData(this);
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        }); 
+        
+            $.ajax({
+                url: baseUrlAdmin + "/days/update",
+                method: "POST",
+                data: formData,
+                dataType: "json",
+                processData: false,
+                contentType: false,  
+                success: function (data) {                      
+    
+                    if (data.data =='true') {
+                        localStorage.setItem("message",'Records sucessfylly updated');
+                        window.location.assign(baseUrlAdmin + "/days");  
+                    }                   
+                   
+                    $.each(data.data,function(field_name,error){
+                        $('span[id^="'+field_name+'"]').remove();
+                    $(document).find('[name='+field_name+']').after('<span id="'+field_name+'" class="text-danger text-left">' +error+ '</span>')
+                    })
+    
+                },
+                 
+            });     
+    }); 
+
+
     
 });

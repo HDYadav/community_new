@@ -82,19 +82,19 @@ class CityController extends Controller
         public function delete(Request $request)
         {
 
-        try {
-            $input = $request->all();
+            try {
+                $input = $request->all();
 
-            $input = request()->except(['_token']);
+                $input = request()->except(['_token']);
 
-            DB::table('cities')->where('id', $input['id'])->delete();
-            
-            $msg = 'City successfully deleted';
-            return ['status' => true, 'message' => $msg];
-        } catch (\Exception $exe) {
-            return ['status' => 'false', 'message' => $exe->getMessage()];
+                DB::table('cities')->where('id', $input['id'])->delete();
+                
+                $msg = 'City successfully deleted';
+                return ['status' => true, 'message' => $msg];
+            } catch (\Exception $exe) {
+                return ['status' => 'false', 'message' => $exe->getMessage()];
+            }
         }
-    }
 
 
 

@@ -8,12 +8,12 @@
         <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary text-white me-2">
                 <i class="mdi mdi-home"></i>
-            </span> Places
+            </span> Year
         </h3>
 
         <div class="lead">
-            Manage Places here.
-            <a href="{{ route('city.create') }}" class="btn btn-primary btn-sm float-right">Add Place</a>
+            Manage Year here.
+            <a href="{{ route('years.create') }}" class="btn btn-primary btn-sm float-right">Add Year</a>
         </div>
         <span id="msg" class="text-sucess text-left"></span>
     </div>
@@ -27,7 +27,7 @@
     <div class="col-lg-12 stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Place Managment System</h4>
+                <h4 class="card-title">Year Managment System</h4>
 
                 <table class="table table-bordered data-table">
                     <thead>
@@ -52,7 +52,7 @@
 <script type="text/javascript">
     function deletess(id) {
 
-        var hitURL = baseUrlAdmin + '/city/delete';
+        var hitURL = baseUrlAdmin + '/years/delete';
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -124,14 +124,14 @@
         var table = $('.data-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('city.index') }}",
+            ajax: "{{ route('years.index') }}",
             columns: [{
                     data: 'id',
                     name: 'id'
                 },
                 {
-                    data: 'name',
-                    name: 'name'
+                    data: 'year',
+                    name: 'year'
                 },
                 {
                     data: 'action',

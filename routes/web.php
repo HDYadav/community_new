@@ -11,6 +11,8 @@ use App\Http\Controllers\Admin\MessageGiverController;
 use App\Http\Controllers\Admin\SchedulerController;
 use App\Http\Controllers\Admin\TaskController;
 use App\Http\Controllers\Admin\PdfController;
+use App\Http\Controllers\Admin\DayController;
+use App\Http\Controllers\Admin\YearController;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,6 +77,27 @@ use App\Http\Controllers\Admin\PdfController;
             Route::post('/delete', [CityController::class, 'delete'])->name('city.delete');
            
         });
+
+        Route::group(['prefix' => 'years'], function () {
+            Route::get('/', [YearController::class,'index'])->name('years.index');
+            Route::get('/create', [YearController::class, 'create'])->name('years.create');
+            Route::post('/store', [YearController::class, 'store'])->name('year.store');
+            Route::get('/{year}/edit', [YearController::class, 'edit'])->name('year.edit');
+            Route::post('/update', [YearController::class, 'update'])->name('years.update');
+            Route::post('/delete', [YearController::class, 'delete'])->name('year.delete');
+            
+        });
+
+        Route::group(['prefix' => 'days'], function () {
+            Route::get('/', [DayController::class, 'index'])->name('days.index');
+            Route::get('/create', [DayController::class, 'create'])->name('days.create');
+            Route::post('/store', [DayController::class, 'store'])->name('days.store');
+            Route::get('/{year}/edit', [DayController::class, 'edit'])->name('days.edit');
+            Route::post('/update', [DayController::class, 'update'])->name('days.update');
+            Route::post('/delete', [DayController::class, 'delete'])->name('days.delete');
+        });
+
+
 
 
         Route::group(['prefix' => 'schedulers'], function () {

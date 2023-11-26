@@ -28,6 +28,7 @@
     <li class="nav-item">
       <a href="{{ route('users.index') }}" class="nav-link">Users</a>
       <a href="{{ route('city.index') }}" class="nav-link">Places</a>
+      <a href="{{ route('years.index') }}" class="nav-link">Years</a>
       <a href="{{ route('schedulers.saved_scheduler') }}" class="nav-link">Schedulers</a>
       <!-- <a href="{{ route('schedulers.list') }}" class="nav-link">Schedulers</a> -->
 

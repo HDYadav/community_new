@@ -8,12 +8,12 @@
         <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary text-white me-2">
                 <i class="mdi mdi-home"></i>
-            </span> Places
+            </span> Days
         </h3>
 
         <div class="lead">
-            Manage Places here.
-            <a href="{{ route('city.create') }}" class="btn btn-primary btn-sm float-right">Add Place</a>
+            Manage Days here.
+            <a href="{{ route('days.create') }}" class="btn btn-primary btn-sm float-right">Add Day</a>
         </div>
         <span id="msg" class="text-sucess text-left"></span>
     </div>
@@ -27,13 +27,16 @@
     <div class="col-lg-12 stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Place Managment System</h4>
+                <h4 class="card-title">Day Managment System</h4>
 
                 <table class="table table-bordered data-table">
                     <thead>
                         <tr>
                             <th>id</th>
                             <th>Year</th>
+                            <th>Month</th>
+                            <th>Date</th>
+                            <th>Day</th>
                             <th width="100px">Action</th>
                         </tr>
                     </thead>
@@ -52,7 +55,7 @@
 <script type="text/javascript">
     function deletess(id) {
 
-        var hitURL = baseUrlAdmin + '/city/delete';
+        var hitURL = baseUrlAdmin + '/days/delete';
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -124,14 +127,26 @@
         var table = $('.data-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('city.index') }}",
+            ajax: "{{ route('days.index') }}",
             columns: [{
                     data: 'id',
                     name: 'id'
                 },
                 {
-                    data: 'name',
-                    name: 'name'
+                    data: 'year',
+                    name: 'year'
+                },
+                {
+                    data: 'month',
+                    name: 'month'
+                },
+                {
+                    data: 'date',
+                    name: 'date'
+                },
+                {
+                    data: 'day',
+                    name: 'day'
                 },
                 {
                     data: 'action',
