@@ -45,7 +45,7 @@ class Authenticate extends Middleware
     {
 
       //  dd($request->expectsJson());
-        if (!$request->expectsJson() == false) {
+        if ($request->expectsJson() == false ) {
             return view('login.index');
         }
         return $request->expectsJson() ? null : response()->json('false');
