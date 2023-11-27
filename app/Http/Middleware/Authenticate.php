@@ -45,18 +45,9 @@ class Authenticate extends Middleware
     {
 
         try {
-            $request->expectsJson() ? null : response()->json('false');
+           $request->expectsJson() ? null : response()->json('false');
         }catch(\Exception $exception){
             dd($exception);
         }
-    }
-
-
-    // protected function redirectTo($request)
-    // {
-    //     if (!$request->expectsJson()) {
-    //         return view('admin.auth.login');
-    //     }
-    // }
-
+    } 
 }

@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Repository\UserRepository;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
-//use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth;
  
 
 
@@ -179,4 +179,20 @@ class UsersController extends Controller
             return ['status' => 'false', 'message' => $exe->getMessage()];
         }
     }
+
+    public function logout(Request $request)
+    {
+        try {
+            Auth::guard('web')->logout();
+
+            $request->session()->invalidate();
+
+            $request->session()->regenerateToken();
+
+            return redirect('/');
+        } catch (\Exception $exception) {
+            dd($exception);
+        }
+    }
+
 }

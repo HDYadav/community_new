@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\PdfController;
 use App\Http\Controllers\Admin\DayController;
 use App\Http\Controllers\Admin\YearController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,6 +31,9 @@ use App\Http\Controllers\Admin\YearController;
 
 
  Route::group(['middleware' => ['auth', 'permission','verified']], function() {
+
+    Route::get('/logout', [UsersController::class, 'logout'])->name('logout');
+
     /**
      * Logout Routes
      */
@@ -165,24 +169,11 @@ use App\Http\Controllers\Admin\YearController;
 // Passport 
 
 
- 
 Route::get('/', function () {
     return view('welcome');
 });
  
 
 
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
- 
-
-
-// Route::middleware('auth')->group(function () {
-//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });
 
  require __DIR__.'/auth.php';
