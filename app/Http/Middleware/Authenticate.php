@@ -32,8 +32,7 @@ class Authenticate extends Middleware
 
     protected function unauthenticated($request, array $guards)
     {      
-       // dd($request);
-       
+             
         throw new AuthenticationException(
             'Unauthenticated token.', $guards, $this->redirectTo($request)
         );
@@ -44,9 +43,18 @@ class Authenticate extends Middleware
      */
     protected function redirectTo(Request $request): ?string
     {
-
+        if (!$request->expectsJson()) {
+            return view('login.index');
+        }
         return $request->expectsJson() ? null : response()->json('false');
     }
- 
+
+
+    // protected function redirectTo($request)
+    // {
+    //     if (!$request->expectsJson()) {
+    //         return view('admin.auth.login');
+    //     }
+    // }
 
 }
