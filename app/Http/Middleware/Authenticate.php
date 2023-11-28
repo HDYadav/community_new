@@ -32,6 +32,7 @@ class Authenticate extends Middleware
 
     protected function unauthenticated($request, array $guards)
     {      
+       // dd($request);
              
         throw new AuthenticationException(
             'Unauthenticated token.', $guards, $this->redirectTo($request)
@@ -45,7 +46,7 @@ class Authenticate extends Middleware
     {
 
         try {
-           $request->expectsJson() ? null : response()->json('false');
+          $request->expectsJson() ? null : response()->json('false');
         }catch(\Exception $exception){
             dd($exception);
         }

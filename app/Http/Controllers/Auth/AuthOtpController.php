@@ -36,6 +36,8 @@ class AuthOtpController extends ApiController
         $userOtp = $this->generateOtp($request->mobile);
       //  $userOtp->sendSMS($request->mobile);         // send otp on twillo
 
+     // dd($userOtp);
+
         return $this->sucessResponse('OTP has been sent on Your Mobile Number', $userOtp, true, 201);
     }
 
@@ -52,7 +54,7 @@ class AuthOtpController extends ApiController
     //  dd($user->id);
        
         /* User Does not Have Any Existing OTP */
-        $userOtp = UserOtp::where('user_id', $user->id)->latest()->first(); 
+        $userOtp = UserOtp::where('user_id', $user->id)->select('user_id','otp')->latest()->first(); 
 
         $now = now();
 

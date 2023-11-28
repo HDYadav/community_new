@@ -10,11 +10,10 @@ use App\Helpers\UserData;
 class ProfileController extends ApiController
 {
     
-    public function index(Request $request){ 
-
-        dd($request);
+    public function index(Request $request){  
         
         $userdata = UserData::getUserFrToken($request);
+       // dd($userdata);
         return $this->sucessResponse('Records sucessfully fetch', $userdata, true, 201);
     }
 }
