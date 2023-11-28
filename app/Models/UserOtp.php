@@ -26,10 +26,7 @@ class UserOtp extends Model
         try {
             
             $receiverNumber = '+91'.$receiverNumber;
-<<<<<<< HEAD
-=======
             
->>>>>>> 4413c73 (removed old logs)
             $account_sid = getenv("TWILIO_SID");
             $auth_token = getenv("TWILIO_TOKEN");
             $twilio_number = getenv("TWILIO_FROM");

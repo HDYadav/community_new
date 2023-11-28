@@ -11,6 +11,8 @@ class ProfileController extends ApiController
 {
     
     public function index(Request $request){ 
+
+        dd($request);
         
         $userdata = UserData::getUserFrToken($request);
         return $this->sucessResponse('Records sucessfully fetch', $userdata, true, 201);

@@ -48,9 +48,11 @@ class AuthOtpController extends ApiController
     { 
     
       $user = User::where('mobile', '=', $mobile)->first();   
+
+    //  dd($user->id);
        
         /* User Does not Have Any Existing OTP */
-        $userOtp = UserOtp::where('user_id', $user->id)->latest()->first();
+        $userOtp = UserOtp::where('user_id', $user->id)->latest()->first(); 
 
         $now = now();
 
