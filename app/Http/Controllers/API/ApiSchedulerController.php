@@ -75,8 +75,7 @@ class ApiSchedulerController extends ApiController
 
     public function schUpdate(SaveSchedulerRequest $request, SchedulerRepository $schedulerRepository)
     {
-    
-
+     
        // dd($request);
         // Remove the data before update
         $collection = $schedulerRepository->getAllDaysByMonth($request->month_id, $request->year);
