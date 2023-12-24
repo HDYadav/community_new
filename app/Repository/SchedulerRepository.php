@@ -35,6 +35,8 @@ class SchedulerRepository
 
     public function getAllMonths($request)
     {
+       // dd($request->year_id);
+
         $query =    DB::table('days as d')
             ->join('months as m', 'm.id', '=', 'd.month_id')
             ->where('d.year_id', $request->year_id)            

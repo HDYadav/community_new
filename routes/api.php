@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\RegisterController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\API\ApiSchedulerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,16 @@ Route::post('login', [RegisterController::class, 'login']);
 Route::group(['middleware' => 'auth:api'], function () {
 
     Route::post('profile', [ProfileController::class, 'index']);
+
+    Route::get('get_years', [ApiSchedulerController::class, 'getYears']);
+    Route::get('get_cities', [ApiSchedulerController::class, 'getcities']);
+    Route::get('get_users', [ApiSchedulerController::class, 'getUsers']);
+    Route::post('get_months', [ApiSchedulerController::class, 'getMonths']);
+    Route::post('/all_days ', [ApiSchedulerController::class, 'getAllMDays']);
+
+    Route::post('/sch_update ', [ApiSchedulerController::class, 'schUpdate']);
+
+
     
 });
 
