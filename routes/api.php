@@ -49,7 +49,6 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::post('/sch_update ', [ApiSchedulerController::class, 'schUpdate']);
 
-
     
 });
 

@@ -34,7 +34,8 @@ class AuthOtpController extends ApiController
 
         /* Generate An OTP */
         $userOtp = $this->generateOtp($request->mobile);
-        $userOtp->sendSMS($request->mobile);         // send otp on twillo
+        //dd($userOtp);
+       // $userOtp->sendSMS($request->mobile);         // send otp on twillo
 
      // dd($userOtp);
 
@@ -47,14 +48,19 @@ class AuthOtpController extends ApiController
      * @return response()
      */
     public function generateOtp($mobile)
-    { 
+    {
+
+        //date_default_timezone_set("Asia/Kolkata");   //India time (GMT+5:30)
+        
     
-      $user = User::where('mobile', '=', $mobile)->first();   
+        $user = User::where('mobile', '=', $mobile)->first();   
 
     //  dd($user->id);
        
         /* User Does not Have Any Existing OTP */
-        $userOtp = UserOtp::where('user_id', $user->id)->select('user_id','otp')->latest()->first(); 
+        $userOtp = UserOtp::where('user_id', $user->id)->select('user_id','otp', 'expire_at')->latest()->first(); 
+
+       // return $userOtp->expire_at;
 
         $now = now();
 
@@ -65,7 +71,7 @@ class AuthOtpController extends ApiController
         /* Create a New OTP */
         return UserOtp::create([
             'user_id' => $user->id,
-            'otp' =>rand(1231,7879),
+            'otp' =>rand(1000, 9999),
             'expire_at' => $now->addMinutes(10)
         ]);
     }
